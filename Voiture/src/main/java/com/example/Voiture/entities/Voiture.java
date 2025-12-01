@@ -26,6 +26,6 @@ public class Voiture {
 
 
     @Transient
-    @ManyToOne
+    //@ManyToOne
     private Client client;
 }

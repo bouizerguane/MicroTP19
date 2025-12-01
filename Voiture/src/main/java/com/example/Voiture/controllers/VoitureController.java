@@ -2,6 +2,7 @@ package com.example.Voiture.controllers;
 
 import com.example.Voiture.entities.Voiture;
 import com.example.Voiture.repositories.VoitureRepository;
+import com.example.Voiture.services.VoitureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,17 +12,21 @@ import java.util.List;
 
 @RestController
 public class VoitureController {
-    @Autowired
-    VoitureRepository voitureRepository;
+
+    private final VoitureService voitureService;
+
+    public VoitureController(VoitureService voitureService) {
+        this.voitureService = voitureService;
+    }
+
 
     @GetMapping("/voitures")
     public List<Voiture> findAll() {
-        return voitureRepository.findAll();
+        return voitureService.findAllVoitures();
     }
 
     @GetMapping("/voiture/{id}")
-    public Voiture findById(@PathVariable Long id) throws Exception {
-        return voitureRepository.findById(id)
-                .orElseThrow(() -> new Exception("Voiture non trouvée"));
+    public Voiture findById(@PathVariable Long id) {
+        return voitureService.findVoitureById(id);
     }
 }
